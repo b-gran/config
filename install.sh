@@ -88,7 +88,7 @@ BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
 
 declare -a FILES_TO_SYMLINK=(
   '.config'
-  # '.bash_profile'
+  '.bash_profile'
   '.vimrc'
 )
 
