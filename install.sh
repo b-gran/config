@@ -96,7 +96,7 @@ git submodule update --init --recursive
 git submodule foreach git pull origin master
 
 # Symlink submodules
-link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/.vim/bundle/Vundle.vim" 
+link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.vim" 
 
 declare -a FILES_TO_SYMLINK=(
   '.config'
@@ -126,6 +126,6 @@ for i in ${FILES_TO_SYMLINK[@]}; do
 done
 
 # Install vim plugins
-execute "vim +PluginInstal +qall" "installed vim plugins..."
+execute "vim +PluginInstall +qall" "installed vim plugins..."
 
 print_success "installation completed!"
