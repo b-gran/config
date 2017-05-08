@@ -13,6 +13,11 @@ cmd_exists() {
   [ -x "$(command -v "$1")" ]
 }
 
+# True if the second argument is in the real path of the first
+is_symlink_in_directory() {
+  [[ -L $1 && $(realpath $1) =~ $2 ]]
+}
+
 # Print output in red
 print_error() {
   printf "\e[0;31m  [✖] $1 $2\e[0m\n"
@@ -51,9 +56,6 @@ execute() {
   result_die_failure $? "${2:-$1}"
 }
 
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Check homebrew
 if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
@@ -79,5 +81,48 @@ if ! cmd_exists powerline; then
 else
   print_success "powerline already installed"
 fi
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
+
+declare -a FILES_TO_SYMLINK=(
+  '.config'
+  '.bash_profile'
+  '.vimrc'
+)
+
+mkdir -p ${BACKUP_DIR}
+print_info "Backup directory: $BACKUP_DIR"
+
+for i in ${FILES_TO_SYMLINK[@]}; do
+  source_file="$SCRIPT_DIR/$i"
+  target_file="$HOME/$i"
+
+  if ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
+    # Backup any current dotfiles that aren't symlinks from this directory
+    if [ -f $target_file ]; then
+      print_info "backing up $i..."
+      mv $target_file $BACKUP_DIR/
+    fi
+
+    # Symlink the file if it's not already linked to home
+    execute "ln -fs $source_file $target_file" "linked $targetFile → $sourceFile..."
+  else
+    print_success "linked $targetFile → $sourceFile..."
+  fi
+
+  # Backup any current dotfiles that aren't symlinks from this directory
+  #if [ -f $target_file ] && ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
+  #  print_info "backing up $i..."
+  #  mv $target_file $BACKUP_DIR/
+  #fi
+
+  ## Symlink the file if it's not already linked to home
+  #if ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
+  #  execute "ln -fs $source_file $target_file" "linked $targetFile → $sourceFile..."
+  #else
+  #  print_success "linking $targetFile → $sourceFile..."
+  #fi
+done
 
 print_success "installation completed!"
