@@ -67,6 +67,13 @@ if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
 fi
 
+# Check coreutils
+if ! is_installed_brew coreutils; then
+  execute "brew install coreutils" "coreutils installed"
+else
+  print_success "coreutils already installed"
+fi
+
 # Check python
 if ! cmd_exists python; then
   print_info "installing python..."
