@@ -7,6 +7,10 @@ POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
 
+# Append new commands to history immediately (needs to come after powerline init)
+shopt -s histappend
+export PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -n"
+
 # Command line colors.
 export CLICOLOR=1
 
