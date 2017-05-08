@@ -109,6 +109,7 @@ link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.
 declare -a FILES_TO_SYMLINK=(
   '.config'
   '.bash_profile'
+  '.inputrc'
   '.vimrc'
 )
 
