@@ -57,6 +57,11 @@ execute() {
   result_die_failure $? "${2:-$1}"
 }
 
+# Create a symlink, without following links during creation 
+link() {
+  execute "ln -sfn $1 $2"  "linked $1 → $2..."
+}
+
 # Check homebrew
 if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
@@ -86,6 +91,13 @@ fi
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
 
+# Update submodules
+git submodule update --init --recursive
+git submodule foreach git pull origin master
+
+# Symlink submodules
+link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/.vim/bundle/Vundle.vim" 
+
 declare -a FILES_TO_SYMLINK=(
   '.config'
   '.bash_profile'
@@ -95,6 +107,7 @@ declare -a FILES_TO_SYMLINK=(
 mkdir -p ${BACKUP_DIR}
 print_info "Backup directory: $BACKUP_DIR"
 
+# Symlink everything into home
 for i in ${FILES_TO_SYMLINK[@]}; do
   source_file="$SCRIPT_DIR/$i"
   target_file="$HOME/$i"
@@ -111,5 +124,8 @@ for i in ${FILES_TO_SYMLINK[@]}; do
     print_success "linked $target_file → $source_file..."
   fi
 done
+
+# Install vim plugins
+execute "vim +PluginInstal +qall" "installed vim plugins..."
 
 print_success "installation completed!"
