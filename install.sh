@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Installs prerequisites needed to use the configs.
+# Can be safely run multiple times. Backs up existing configs.
 # Assumes homebrew is already installed.
 # See https://github.com/nicksp/dotfiles/blob/master/setup.sh
 
