@@ -2,14 +2,14 @@
 " Vundle deps.
 
 " Add custom vim config directory to the runtime path
-set rtp+=~/.config/.vim/
+set rtp+=~/.config/vim/
 
 " Vundle pre-requisites (required)
 set nocompatible
 filetype off
 
 " Vundle Startup (required)
-set rtp+=~/.config/.vim/bundle/Vundle.vim
+set rtp+=~/.config/vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Plugins
