@@ -87,7 +87,7 @@ BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
 
 declare -a FILES_TO_SYMLINK=(
   '.config'
-  '.bash_profile'
+  # '.bash_profile'
   '.vimrc'
 )
 
@@ -100,29 +100,15 @@ for i in ${FILES_TO_SYMLINK[@]}; do
 
   if ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
     # Backup any current dotfiles that aren't symlinks from this directory
-    if [ -f $target_file ]; then
+    if [ -e $target_file ]; then
       print_info "backing up $i..."
       mv $target_file $BACKUP_DIR/
     fi
 
-    # Symlink the file if it's not already linked to home
-    execute "ln -fs $source_file $target_file" "linked $targetFile → $sourceFile..."
+    execute "ln -fs $source_file $target_file" "linked $target_file → $source_file..."
   else
-    print_success "linked $targetFile → $sourceFile..."
+    print_success "linked $target_file → $source_file..."
   fi
-
-  # Backup any current dotfiles that aren't symlinks from this directory
-  #if [ -f $target_file ] && ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
-  #  print_info "backing up $i..."
-  #  mv $target_file $BACKUP_DIR/
-  #fi
-
-  ## Symlink the file if it's not already linked to home
-  #if ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
-  #  execute "ln -fs $source_file $target_file" "linked $targetFile → $sourceFile..."
-  #else
-  #  print_success "linking $targetFile → $sourceFile..."
-  #fi
 done
 
 print_success "installation completed!"
