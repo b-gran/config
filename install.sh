@@ -87,6 +87,7 @@ if ! cmd_exists powerline; then
 else
   print_success "powerline already installed"
 fi
+execute "pip install powerline-gitstatus" "git powerline installed"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
