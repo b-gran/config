@@ -94,10 +94,13 @@ if ! cmd_exists powerline; then
 else
   print_success "powerline already installed"
 fi
+
+# Check git addon for powerline
 execute "pip install powerline-gitstatus" "git powerline installed"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BACKUP_DIR="$HOME/.config-backup-$(date | sed s/\ /_/g)"
+BACKUPS="$HOME/.config-backups"
+BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
 
 # Update submodules
 git submodule update --init --recursive
