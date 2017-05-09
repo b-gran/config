@@ -1,3 +1,3 @@
-# Enable vi mode.
+# Enable vi mode (for everything that supports it, including bash).
 set keymap vi
 set editing-mode vi
