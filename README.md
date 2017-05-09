@@ -2,6 +2,8 @@
 
 My personal MacOS configuration and dotfiles.
 
+Inspired by https://github.com/nicksp/dotfiles and https://github.com/kaicataldo/dotfiles.
+
 ## What's included
 * A basic `.bash_profile` with a few custom utilities in `.config/bash`
 * A bash prompt with [powerline](https://github.com/powerline/powerline)
