@@ -103,8 +103,8 @@ BACKUPS="$HOME/.config-backups"
 BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
 
 # Update submodules
-git submodule update --init --recursive
-git submodule foreach git pull origin master
+execute "git submodule update --init --recursive" "updated submodules"
+execute "git submodule foreach git pull origin master" "retrieved latest revisions"
 
 # Symlink submodules
 link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.vim" 
@@ -139,5 +139,18 @@ done
 
 # Install vim plugins
 execute "vim +PluginInstall +qall" "installed vim plugins..."
+
+# Install iTerm fonts
+shopt -s nullglob
+for config_path in .config/iterm/fonts/*; do
+  name="${config_path##*/}"
+  library_path="$HOME/Library/Fonts/$name"
+
+  if [ ! -e "$library_path" ]; then
+    execute "cp ${config_path} ${library_path}" "installed font '$name'"
+  else
+    print_success "font '$name' already installed"
+  fi
+done
 
 print_success "installation completed!"
