@@ -1,15 +1,15 @@
 # Make sure everyone knows which editor is best
 EDITOR=/usr/local/bin/vim
 
+# Append new commands to history immediately
+shopt -s histappend
+export PROMPT_COMMAND="history -a;history -n"
+
 # Start up powerline
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
-
-# Append new commands to history immediately (needs to come after powerline init)
-shopt -s histappend
-export PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -n"
 
 # Command line colors.
 export CLICOLOR=1
