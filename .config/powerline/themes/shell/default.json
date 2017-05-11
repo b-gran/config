@@ -1,6 +1,16 @@
 {
   "default_module": "powerline.segments.common",
   "segments": {
+    "above": [
+      {
+        "left": [
+          {
+            "function": "powerline_gitstatus.gitstatus",
+            "priority": 10
+          }
+        ]
+      }
+    ],
     "left": [
       {
         "function": "powerline.segments.shell.mode"
@@ -36,10 +46,6 @@
       },
       {
         "function": "powerline.segments.shell.last_pipe_status",
-        "priority": 10
-      },
-      {
-        "function": "powerline_gitstatus.gitstatus",
         "priority": 10
       }
     ]
