@@ -1,9 +1,20 @@
 # Make sure everyone knows which editor is best
 EDITOR=/usr/local/bin/vim
 
-# Append new commands to history immediately
-shopt -s histappend
-export PROMPT_COMMAND="history -a;history -n"
+# Fix history
+shopt -s histappend # append to history immediately
+HISTSIZE=9000
+HISTFILESIZE=$HISTSIZE
+HISTCONTROL=ignorespace:ignoredups
+_bash_history_sync() {
+  builtin history -a
+  HISTFILESIZE=$HISTSIZE # fix history numbers when called from PROMPT_COMMAND
+}
+history() {
+  _bash_history_sync
+  builtin history "$@"
+}
+export PROMPT_COMMAND=_bash_history_sync
 
 # Start up powerline
 powerline-daemon -q
