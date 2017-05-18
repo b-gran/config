@@ -98,6 +98,9 @@ fi
 # Check git addon for powerline
 execute "pip install powerline-gitstatus" "git powerline installed"
 
+# Check get bash completion
+execute "brew install bash-completion" "bash git completion installed"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
 BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
