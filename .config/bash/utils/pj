@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+
+let buffer = FastBuf()
+process.stdin.on('data', data => buffer.append(data))
+process.stdin.on('end', () => {
+  try {
+    const str = buffer.toString()
+    const asJson = JSON.parse(str)
+    const pretty = JSON.stringify(asJson, null, '  ')
+    process.stdout.write(pretty)
+    return process.exit(0)
+  } catch (err) {
+    console.error('Bad JSON', err)
+    return process.exit(1)
+  }
+})
+
+// Timeout after 100ms
+let stdinEvent = false
+process.stdin.on('data', () => (stdinEvent = true))
+process.stdin.on('end', () => (stdinEvent = true))
+setTimeout(() => {
+  if (!stdinEvent) {
+    console.error('No data in 100ms. Timed out.')
+    return process.exit(1)
+  }
+}, 100)
+
+// A Buffer-like object with three operations
+// Append a Buffer to the FastBuf
+// append :: FastBuf a => FastBuf a ~> Buffer a -> void 
+//
+// // Returns the length of the FastBuf
+// length :: FastBuf a => () -> Number
+//
+// Convert the FastBuf to a string
+// toString :: FastBuf a => () => String
+function FastBuf() {
+  let buf = Buffer.alloc(1)
+  let offset = 0
+
+  return {
+    append (data) {
+      if (data.length === 0) return
+
+      const newOffset = offset + data.length
+
+      if (newOffset >= buf.length) {
+        const newSize = newOffset >= (buf.length * 2)
+          ? Math.pow(2, nearestPowerOf2(newOffset))
+          : buf.length * 2
+
+        const tmp = buf
+        buf = Buffer.alloc(newSize)
+        tmp.copy(buf)
+      }
+
+      data.copy(buf, offset)
+      offset += data.length
+    },
+
+    length: () => buf.length,
+
+    toString: () => buf.slice(0, offset).toString()
+  }
+}
+
+function nearestPowerOf2 (target) {
+  let value = target
+  let power = 0
+  while ((value = value >> 1)) {
+    power += 1
+  }
+  return power + (1 << power === (target|0) ? 0 : 1)
+}

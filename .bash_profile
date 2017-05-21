@@ -31,7 +31,7 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
 fi
 
 # Load the bash utils in config
-source ~/.config/bash/*.sh
+for f in ~/.config/bash/*.sh; do source $f; done
 
 # If there's a local bash_profile, use it
 local_bash_profile="$HOME/.local.bash_profile"
