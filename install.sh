@@ -104,6 +104,9 @@ execute "brew install bash-completion" "bash git completion installed"
 # Install NVM
 execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
 
+# Install fpp
+execute "brew install fpp" "fpp installed"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
 BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
