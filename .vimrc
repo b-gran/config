@@ -18,6 +18,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Helcaraxan/schemalang-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 
 " (required)
 call vundle#end()
@@ -66,3 +69,7 @@ if has("gui_running")
   set background=light
   colorscheme solarized
 endif
+
+" Fix auto folding in some file types
+set foldmethod=indent
+set foldlevel=20
