@@ -62,6 +62,28 @@ link() {
   execute "ln -sfn $1 $2"  "linked $1 → $2..."
 }
 
+# Figure out if we're skipping backup
+# The -b argument skips backup.
+DO_BACKUP=true
+while getopts "b" opt; do
+  case $opt in
+    b)
+      DO_BACKUP=false
+      ;;
+  esac
+done
+
+# Warn if we're not backing up
+if ! $DO_BACKUP; then
+  printf "\e[0;33mWarning: \e[0m you are about to continue without a backup of your existing config.\n"
+  read -p "Are you sure you want to continue (y/n)?" choice
+  case "$choice" in
+    y|Y ) ;;
+    n|N ) echo "Exiting...";;
+    * ) echo "Invalid input. Exiting...";;
+  esac
+fi
+
 # Check homebrew
 if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
@@ -128,8 +150,10 @@ declare -a FILES_TO_SYMLINK=(
   '.vimrc'
 )
 
-mkdir -p ${BACKUP_DIR}
-print_info "Backup directory: $BACKUP_DIR"
+if $DO_BACKUP; then
+  mkdir -p ${BACKUP_DIR}
+  print_info "Backup directory: $BACKUP_DIR"
+fi
 
 # Symlink everything into home
 for i in ${FILES_TO_SYMLINK[@]}; do
@@ -138,9 +162,11 @@ for i in ${FILES_TO_SYMLINK[@]}; do
 
   if ! is_symlink_in_directory $target_file $SCRIPT_DIR; then
     # Backup any current dotfiles that aren't symlinks from this directory
-    if [ -e $target_file ]; then
-      print_info "backing up $i..."
-      mv $target_file $BACKUP_DIR/
+    if $DO_BACKUP; then
+      if [ -e $target_file ]; then
+        print_info "backing up $i..."
+        mv $target_file $BACKUP_DIR/
+      fi
     fi
 
     execute "ln -fs $source_file $target_file" "linked $target_file → $source_file..."
