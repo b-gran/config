@@ -132,6 +132,9 @@ execute "brew install fpp" "fpp installed"
 # Install tree
 execute "brew install tree" "tree installed"
 
+# Install tmux
+execute "brew install tmux" "tmux installed"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
 BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
