@@ -151,6 +151,7 @@ declare -a FILES_TO_SYMLINK=(
   '.bash_profile'
   '.inputrc'
   '.vimrc'
+  '.gitconfig'
 )
 
 if $DO_BACKUP; then

@@ -1,0 +1,7 @@
+[include]
+  path = ~/.local.gitconfig
+[core]
+  editor = /usr/bin/env vim
+[alias]
+  change-date = "!git commit --amend --date='$1'"
+  push-branch = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
