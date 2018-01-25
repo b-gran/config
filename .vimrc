@@ -70,6 +70,9 @@ if has("gui_running")
   colorscheme solarized
 endif
 
+" Disable folding in markdown files
+let g:vim_markdown_folding_disabled = 1
+
 " Fix auto folding in some file types
 set foldmethod=indent
 set foldlevel=20
