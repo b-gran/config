@@ -75,3 +75,9 @@ let g:vim_markdown_folding_disabled = 1
 " Fix auto folding in some file types
 set foldmethod=indent
 set foldlevel=20
+
+" Show hidden files in nerdtree automatically
+let NERDTreeShowHidden=1
+
+" KEY BINDINGS
+map <C-n> :NERDTreeToggle<CR>
