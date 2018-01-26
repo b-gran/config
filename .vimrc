@@ -65,11 +65,9 @@ set ruler
 " Enable spell checking for some file types
 autocmd FileType latex,tex,md,markdown,text,txt setlocal spell
 
-" Solarized colors in gui
-if has("gui_running")
-  set background=light
-  colorscheme solarized
-endif
+" Enable Solarized
+set background=light
+colorscheme solarized
 
 " Disable folding in markdown files
 let g:vim_markdown_folding_disabled = 1
