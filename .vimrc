@@ -21,6 +21,7 @@ Plugin 'Helcaraxan/schemalang-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " (required)
 call vundle#end()
