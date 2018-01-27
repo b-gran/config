@@ -79,5 +79,31 @@ set foldlevel=20
 " Show hidden files in nerdtree automatically
 let NERDTreeShowHidden=1
 
-" KEY BINDINGS
+" Load text bubbling
+source .config/vim/bubble.vim
+
+"'''''''''''''''''''''''''''''''''''''''''''''''"
+"''                KEY BINDINGS               ''"
+"'''''''''''''''''''''''''''''''''''''''''''''''"
+
+" Space -> leader
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
 map <C-n> :NERDTreeToggle<CR>
+
+"SHIFT+← move to prev tab
+map <Esc>[1;2D :tabprevious<CR>
+
+"SHIFT+→ move to next tab
+map <Esc>[1;2C :tabnext<CR>
+
+"<A-k> moves lines up
+noremap <A-k> ˚
+nmap ˚ [e
+xmap ˚ [e
+
+"<A-j> moves lines down
+noremap <A-j> ∆
+nmap ∆ ]e
+xmap ∆ ]e
