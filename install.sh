@@ -11,7 +11,7 @@ is_installed_brew() {
 }
 
 cmd_exists() {
-  [ -x "$(command -v "$1")" ]
+  ! [ -z "$(command -v "$1")" ]
 }
 
 # True if the second argument is in the real path of the first
@@ -124,7 +124,11 @@ execute "pip install powerline-gitstatus" "git powerline installed"
 execute "brew install bash-completion" "bash git completion installed"
 
 # Install NVM
-execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
+if ! cmd_exists nvm; then
+  execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
+else
+  print_success "nvm already installed"
+fi
 
 # Install fpp
 execute "brew install fpp" "fpp installed"
