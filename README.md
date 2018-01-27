@@ -5,13 +5,16 @@ My personal MacOS configuration and dotfiles.
 Inspired by https://github.com/nicksp/dotfiles and https://github.com/kaicataldo/dotfiles.
 
 ## What's included
-* A basic `.bash_profile` with a few custom utilities in `.config/bash`
-* A bash prompt with [powerline](https://github.com/powerline/powerline)
-* A `.vimrc` with [Vundle](https://github.com/VundleVim/Vundle.vim)
-* [solarized](http://ethanschoonover.com/solarized) color scheme for `vim` and `iTerm`
+* `.bash_profile` with utilities in `.config/bash`
+* [powerline](https://github.com/powerline/powerline) for `vim` and `bash`
+* `vim` config with [Vundle](https://github.com/VundleVim/Vundle.vim)
+* `tmux` config
+* [solarized](http://ethanschoonover.com/solarized) color schemes for `vim`, `iTerm`, and `tmux`
+* Useful CLI utils: `nvm`, `fpp`, `tree`
+* `iTerm` config and fonts (config not automatically loaded)
 
 ## Prerequisites
-* Must be running MacOS or OS X
+* For now, only MacOS is supported
 * `git` with submodule support
 * Install [homebrew](https://brew.sh/)
     * The install will abort if `brew` isn't on the `PATH`
@@ -33,6 +36,11 @@ cd config
 Any configuration files that would be overwritten are backed up automatically.
 __It's safe to run the installation script multiple times.__
 
+**Note:** if you want to skip the config backup, you can run
+```sh
+./install.sh -b
+```
+
 #### 2 - Configure `iTerm`
 
 Open `iTerm` and navigate to `Preferences... > General > Preferences`. Tick the 
@@ -42,8 +50,8 @@ Open `iTerm` and navigate to `Preferences... > General > Preferences`. Tick the
 path/to/config/repo/.config/iterm/
 ```
 
-## Local config updates
+## Making local changes to the config files
 
 A local `.bash_profile` is loaded automatically from `$HOME/.local.bash_profile`.
 
-The `$HOME/.vim` directory isn't modified, so you can make changes to that.
+The `$HOME/.vim` directory isn't modified, so you can safely modify it.
