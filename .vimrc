@@ -2,7 +2,7 @@
 " Vundle deps.
 
 " Add custom vim config directory to the runtime path
-set rtp+=~/.config/vim/
+set rtp+=$HOME/.config/vim/
 
 " Vundle pre-requisites (required)
 set nocompatible
@@ -80,7 +80,10 @@ set foldlevel=20
 let NERDTreeShowHidden=1
 
 " Load text bubbling
-source .config/vim/bubble.vim
+runtime bubble.vim
+
+" Command for commenting out lines
+command! -range -nargs=1 Comment :execute "'<,'>normal! <C-v>0I" . <f-args> . "<Esc><Esc>"
 
 "'''''''''''''''''''''''''''''''''''''''''''''''"
 "''                KEY BINDINGS               ''"
@@ -107,3 +110,7 @@ xmap ˚ [e
 noremap <A-j> ∆
 nmap ∆ ]e
 xmap ∆ ]e
+
+" Comment out lines with <space>/
+vmap <leader>/ :Comment 
+nnoremap <leader>/ V:Comment 
