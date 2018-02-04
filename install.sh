@@ -10,6 +10,15 @@ is_installed_brew() {
   brew ls --versions $1 > /dev/null
 }
 
+# brew install a package only if it isn't already installed
+brew_install() {
+  if ! is_installed_brew $1; then
+    execute "brew install $1" "$1 installed"
+  else
+    print_success "$1 already installed"
+  fi
+}
+
 cmd_exists() {
   ! [ -z "$(command -v "$1")" ]
 }
@@ -84,27 +93,16 @@ if ! $DO_BACKUP; then
   esac
 fi
 
-# Check homebrew
+# brew must be installed to continue
 if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
 fi
 
-# Check coreutils
-if ! is_installed_brew coreutils; then
-  execute "brew install coreutils" "coreutils installed"
-else
-  print_success "coreutils already installed"
-fi
+# Basic utilities (also dependencies for later commands in this install script)
+brew_install coreutils
+brew_install python
 
-# Check python
-if ! cmd_exists python; then
-  print_info "installing python..."
-  execute "brew install python" "python installed"
-else
-  print_success "python already installed"
-fi
-
-# Check powerline
+# powerline and addons
 if ! cmd_exists powerline; then
   # Don't use the --user flag if python is brew installed
   print_info "installing powerline..."
@@ -117,27 +115,22 @@ else
   print_success "powerline already installed"
 fi
 
-# Check git addon for powerline
+# git powerline addon (powerline must already be installed)
 execute "pip install powerline-gitstatus" "git powerline installed"
 
-# Check git bash completion
-execute "brew install bash-completion" "bash git completion installed"
-
-# Install NVM
+# As of Feb2018, nvm must be installed by curl | bash
 if ! cmd_exists nvm; then
   execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
 else
   print_success "nvm already installed"
 fi
 
-# Install fpp
-execute "brew install fpp" "fpp installed"
-
-# Install tree
-execute "brew install tree" "tree installed"
-
-# Install tmux
-execute "brew install tmux" "tmux installed"
+# Utilities
+brew_install bash-completion
+brew_install fpp
+brew_install tree
+brew_install tmux
+brew_install ruby
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
@@ -164,7 +157,7 @@ if $DO_BACKUP; then
   print_info "Backup directory: $BACKUP_DIR"
 fi
 
-# Symlink everything into home
+# Symlink everything above into home
 for i in ${FILES_TO_SYMLINK[@]}; do
   source_file="$SCRIPT_DIR/$i"
   target_file="$HOME/$i"
