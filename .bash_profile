@@ -1,5 +1,5 @@
 # Make sure everyone knows which editor is best
-EDITOR=/usr/local/bin/vim
+export EDITOR=/usr/local/bin/vim
 
 # Fix history
 shopt -s histappend # append to history immediately
@@ -43,7 +43,33 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 
+##################################
+###           TMUX             ###
+##################################
+
 # Hack to fix nvm on tmux:
 if [ -n $TMUX ]; then
   nvm use 9
 fi
+
+# Send keys to all tmux panes
+unset -f _tmux_send_keys_all_panes_
+_tmux_send_keys_all_panes_ () {
+  for _pane in $(tmux list-panes -F '#P'); do
+    tmux send-keys -t ${_pane} "$@"
+  done
+}
+alias skap="_tmux_send_keys_all_panes_"
+
+_tmux_send_command_all_panes () {
+  _tmux_send_keys_all_panes_ "$@" Enter
+}
+alias sc="_tmux_send_command_all_panes"
+
+unset -f _tmux_kill_sessions_ 
+_tmux_kill_sessions_ () {
+  tmux list-sessions | grep -E -v '\(attached\)$' | while IFS='\n' read line; do
+    tmux kill-session -t "${line%%:*}"
+  done
+}
+alias ks="_tmux_kill_sessions_"
