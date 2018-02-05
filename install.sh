@@ -127,10 +127,11 @@ fi
 
 # Utilities
 brew_install bash-completion
+brew_install ruby
 brew_install fpp
 brew_install tree
 brew_install tmux
-brew_install ruby
+execute "gem install tmuxinator" "tmuxinator installed"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
