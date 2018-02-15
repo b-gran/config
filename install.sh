@@ -133,6 +133,9 @@ brew_install tree
 brew_install tmux
 execute "gem install tmuxinator" "tmuxinator installed"
 
+# Needed to support copying from tmux into system pasteboard
+brew_install reattach-to-user-namespace
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUPS="$HOME/.config-backups"
 BACKUP_DIR="$BACKUPS/backup-$(date | sed s/\ /_/g)"
