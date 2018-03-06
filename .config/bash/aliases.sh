@@ -14,4 +14,4 @@ alias rh='sed -i '\''$d'\'' ~/.bash_history'
 
 # Copy the current directory into the system copy buffer
 # Omits any newlines
-alias gpwd="pwd | strip_newlines | pbcopy"
+alias gpwd="pwd | strip_newlines | system_copy"
