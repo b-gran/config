@@ -1,3 +1,21 @@
+# Just a proxy for pbcopy, used so that we can eventually
+# be cross-platform.
+function system_copy {
+  pbcopy "$@"
+}
+
+# Just a proxy for pbpaste, used so that we can eventually
+# be cross-platform.
+function system_paste {
+  pbpaste "$@"
+}
+
+# Strip newslines from the input.
+# Returns a single string
+function strip_newlines {
+  printf "%s" `echo "$@" | sed -e :a -e N -e '$!ba' -e 's/\n//g'`
+}
+
 function ScriptDir {
   echo "$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 }

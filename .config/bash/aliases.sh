@@ -1,5 +1,3 @@
-# Aliases
-
 # LS
 alias ll="ls -l"
 alias la="ls -al"
@@ -13,3 +11,7 @@ alias gd='git diff'
  
 # Removes the most recent command from history.
 alias rh='sed -i '\''$d'\'' ~/.bash_history'
+
+# Copy the current directory into the system copy buffer
+# Omits any newlines
+alias gpwd="pwd | strip_newlines | pbcopy"
