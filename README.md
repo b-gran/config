@@ -1,6 +1,7 @@
 # `config`
 
-My personal MacOS configuration and dotfiles.
+My personal MacOS configuration and dotfiles. All of the config can be automatically installed by `install.sh`, 
+and the install script can be run repeatedly without issues.
 
 Inspired by https://github.com/nicksp/dotfiles and https://github.com/kaicataldo/dotfiles.
 
