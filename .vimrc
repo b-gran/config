@@ -22,6 +22,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'simnalamburt/vim-mundo'
 
 " (required)
 call vundle#end()
@@ -114,3 +115,5 @@ xmap ∆ ]e
 " Comment out lines with <space>/
 vmap <leader>/ :Comment 
 nnoremap <leader>/ V:Comment 
+
+map <C-g> :MundoToggle<CR>
