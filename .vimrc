@@ -86,6 +86,9 @@ runtime bubble.vim
 " Command for commenting out lines
 command! -range -nargs=1 Comment :execute "'<,'>normal! <C-v>0I" . <f-args> . "<Esc><Esc>"
 
+" Enable frontmatter in markdown files
+let g:vim_markdown_frontmatter = 1
+
 "'''''''''''''''''''''''''''''''''''''''''''''''"
 "''                KEY BINDINGS               ''"
 "'''''''''''''''''''''''''''''''''''''''''''''''"
