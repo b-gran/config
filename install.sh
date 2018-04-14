@@ -136,30 +136,21 @@ fi
 brew_install coreutils
 brew_install python
 
-if ! cmd_exists pip; then
-  if hash pip3 2>/dev/null; then
-    alias pip="pip3"
-  else
-    print_error "No pip found. Please install pip"
-    exit 1
-  fi
-fi
-
 # powerline and addons
 if ! cmd_exists powerline; then
   # Don't use the --user flag if python is brew installed
   print_info "installing powerline..."
   if is_installed_brew python; then
-    execute "pip install powerline-status" "powerline installed"
+    execute "pip3 install powerline-status" "powerline installed"
   else
-    execute "pip install --user powerline-status" "powerline installed"
+    execute "pip3 install --user powerline-status" "powerline installed"
   fi
 else
   print_success "powerline already installed"
 fi
 
 # git powerline addon (powerline must already be installed)
-execute "pip install powerline-gitstatus" "git powerline installed"
+execute "pip3 install powerline-gitstatus" "git powerline installed"
 
 # As of Feb2018, nvm must be installed by curl | bash
 if ! cmd_exists nvm; then
