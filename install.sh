@@ -48,6 +48,34 @@ print_success() {
   printf "\e[0;32m  [✔] $1\e[0m\n"
 }
 
+# Usage: println_color red 'Some text'
+# Prints a line to stdout with all of the text as a single color.
+println_color() {
+  line="\e[0;"
+  case "$1" in
+    red)
+      line+='31'
+      ;;
+    purple)
+      line+='35'
+      ;;
+    yellow)
+      line+='33'
+      ;;
+    green)
+      line+='32'
+      ;;
+    blue)
+      line+='34'
+      ;;
+    *)
+      line+='34'
+      ;;
+  esac
+  line+="m$2\e[0m\n"
+  printf "$line"
+}
+
 # Prints a success message if the the code ($1) is 0
 # Prints a warning message if the code ($1) is non-zero
 # Exits if the code ($1) is non-zero and the last argument ($3) is true
@@ -70,6 +98,12 @@ execute() {
 link() {
   execute "ln -sfn $1 $2"  "linked $1 → $2..."
 }
+
+println_color blue "You're about to install the b-gran MacOS environment."
+println_color blue "These dotfiles all use python3. This script will install python3 anyway, but if you have already installed python2 you will need to upgrade."
+echo
+println_color purple "Press any key to continue installing"
+read
 
 # Figure out if we're skipping backup
 # The -b argument skips backup.
@@ -101,6 +135,15 @@ fi
 # Basic utilities (also dependencies for later commands in this install script)
 brew_install coreutils
 brew_install python
+
+if ! cmd_exists pip; then
+  if hash pip3 2>/dev/null; then
+    alias pip="pip3"
+  else
+    print_error "No pip found. Please install pip"
+    exit 1
+  fi
+fi
 
 # powerline and addons
 if ! cmd_exists powerline; then
