@@ -73,3 +73,6 @@ _tmux_kill_sessions_ () {
   done
 }
 alias ks="_tmux_kill_sessions_"
+
+# Load iterm integration if it's installed
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
