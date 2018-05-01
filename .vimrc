@@ -53,8 +53,9 @@ set number
 " Command in bottom bar
 set showcmd
 
-" Highlighting matching syntax pairs
-set showmatch
+" Highlighting 
+set showmatch " Matching syntax pairs
+set hlsearch " Matching search terms
 
 " Move visually (instead of line-by-line)
 nnoremap j gj
@@ -119,4 +120,8 @@ xmap ∆ ]e
 vmap <leader>/ :Comment 
 nnoremap <leader>/ V:Comment 
 
+" Toggles the undo history panel
 map <C-g> :MundoToggle<CR>
+
+" Clear the latest search
+map <leader>c :noh<CR>
