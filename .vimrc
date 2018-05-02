@@ -125,3 +125,7 @@ map <C-g> :MundoToggle<CR>
 
 " Clear the latest search
 map <leader>c :noh<CR>
+
+" Open case-insensitive searches with alt
+map ÷ /\c
+map ¿ ?\c
