@@ -153,7 +153,11 @@ fi
 execute "pip3 install powerline-gitstatus" "git powerline installed"
 
 # As of Feb2018, nvm must be installed by curl | bash
-if ! cmd_exists nvm; then
+# Since the shell executing this command won't have sourced the .bash_profile, we can't 
+# just use `command` or `type` to see if nvm is installed.
+# Instead, we have to actually check the install location.
+NVM_DIR="$HOME/.nvm"
+if [ ! -d "$NVM_DIR" ]; then
   execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
 else
   print_success "nvm already installed"
