@@ -225,6 +225,9 @@ done
 # Install vim plugins
 execute "vim +PluginInstall +qall" "installed vim plugins..."
 
+# Install tmux plugins
+execute "$HOME/.config/tmux/plugins/tpm/bin/install_plugins" "installed tmux plugins..."
+
 # Install iTerm fonts
 shopt -s nullglob
 for config_path in .config/iterm/fonts/*; do
