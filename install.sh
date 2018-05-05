@@ -180,6 +180,7 @@ execute "git submodule foreach git pull origin master" "retrieved latest revisio
 
 # Symlink submodules
 link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.vim" 
+link "$SCRIPT_DIR/submodules/tpm" "$SCRIPT_DIR/.config/tmux/plugins/tpm" 
 
 declare -a FILES_TO_SYMLINK=(
   '.config'
