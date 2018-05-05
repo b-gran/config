@@ -102,11 +102,9 @@ link() {
 println_color blue "You're about to install the b-gran MacOS environment."
 println_color blue "These dotfiles all use python3. This script will install python3 anyway, but if you have already installed python2 you will need to upgrade."
 echo
-println_color purple "Press any key to continue installing"
-read
 
-# Figure out if we're skipping backup
-# The -b argument skips backup.
+# Figure out if we're skipping backups.
+# The -b argument skips backups.
 DO_BACKUP=true
 while getopts "b" opt; do
   case $opt in
@@ -118,13 +116,17 @@ done
 
 # Warn if we're not backing up
 if ! $DO_BACKUP; then
-  printf "\e[0;33mWarning: \e[0m you are about to continue without a backup of your existing config.\n"
-  read -p "Are you sure you want to continue (y/n)?" choice
+  printf "\e[0;33mWarning:\e[0m you are about to continue without a backup of your existing config.\n"
+  println_color purple "Are you sure you want to continue (y/n)?" 
+  read choice
   case "$choice" in
     y|Y ) ;;
-    n|N ) echo "Exiting...";;
-    * ) echo "Invalid input. Exiting...";;
+    n|N ) echo "Exiting..."; exit 1;;
+    * ) echo "Invalid input. Exiting..."; exit 1;;
   esac
+else
+  println_color purple "Press any key to continue installing..."
+  read
 fi
 
 # brew must be installed to continue
