@@ -225,6 +225,10 @@ done
 # Install vim plugins
 execute "vim +PluginInstall +qall" "installed vim plugins..."
 
+# Reload tmux conf in case there's a tmux session currently running but 
+# we've modified the config.
+tmux source-file $HOME/.tmux.conf
+
 # Install tmux plugins
 execute "$HOME/.config/tmux/plugins/tpm/bin/install_plugins" "installed tmux plugins..."
 
