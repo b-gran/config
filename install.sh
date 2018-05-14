@@ -197,6 +197,7 @@ declare -a FILES_TO_SYMLINK=(
   '.vimrc'
   '.gitconfig'
   '.tmux.conf'
+  '.tigrc'
 )
 
 if $DO_BACKUP; then
