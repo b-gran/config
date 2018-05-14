@@ -29,6 +29,9 @@ Plugin 'simnalamburt/vim-mundo'
 call vundle#end()
 filetype plugin indent on
 
+" Enable mosue
+set mouse=a
+
 " Setup powerline status line
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
