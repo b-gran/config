@@ -91,6 +91,9 @@ command! -range -nargs=1 Comment :execute "'<,'>normal! <C-v>0I" . <f-args> . "<
 " Enable frontmatter in markdown files
 let g:vim_markdown_frontmatter = 1
 
+" Show "hidden" (i.e. starting with a dot) files in fzf. Requires ag to be on the path.
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
+
 "'''''''''''''''''''''''''''''''''''''''''''''''"
 "''                KEY BINDINGS               ''"
 "'''''''''''''''''''''''''''''''''''''''''''''''"
@@ -130,3 +133,6 @@ map <leader>c :noh<CR>
 " Open case-insensitive searches with alt
 map ÷ /\c
 map ¿ ?\c
+
+" File searching
+nnoremap <leader>f :call fzf#run({ 'sink': 'e', 'window': 'enew' })<cr>

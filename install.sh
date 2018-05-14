@@ -172,6 +172,7 @@ brew_install fpp
 brew_install tree
 brew_install tmux
 execute "gem install tmuxinator" "tmuxinator installed"
+brew_install the_silver_searcher
 brew_install fzf
 
 # Needed to support copying from tmux into system pasteboard
