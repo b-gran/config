@@ -22,6 +22,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf'
 Plugin 'simnalamburt/vim-mundo'
 
 " (required)

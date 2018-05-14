@@ -172,6 +172,7 @@ brew_install fpp
 brew_install tree
 brew_install tmux
 execute "gem install tmuxinator" "tmuxinator installed"
+brew_install fzf
 
 # Needed to support copying from tmux into system pasteboard
 brew_install reattach-to-user-namespace
