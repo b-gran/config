@@ -174,6 +174,7 @@ brew_install tmux
 execute "gem install tmuxinator" "tmuxinator installed"
 brew_install the_silver_searcher
 brew_install fzf
+brew_install tig
 
 # Needed to support copying from tmux into system pasteboard
 brew_install reattach-to-user-namespace
