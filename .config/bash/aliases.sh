@@ -15,3 +15,15 @@ alias rh='sed -i '\''$d'\'' ~/.bash_history'
 # Copy the current directory into the system copy buffer
 # Omits any newlines
 alias gpwd="pwd | strip_newlines | system_copy"
+
+# View all branches
+alias tiga='env TIG_DIFF_OPTS="-M -C --find-copies-harder" tig --all HEAD'
+
+# Local branches & tags
+tigl() {
+  local branches
+  local tags
+  branches=($(git branch | sed 's/^[ *]*//'))
+  tags=($(git tag))
+  env TIG_DIFF_OPTS="-M -C --find-copies-harder" tig "${branches[@]}" "${tags[@]}" origin/master HEAD
+}
