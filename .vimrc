@@ -29,7 +29,7 @@ Plugin 'simnalamburt/vim-mundo'
 call vundle#end()
 filetype plugin indent on
 
-" Enable mosue
+" Enable mouse
 set mouse=a
 
 " Setup powerline status line
