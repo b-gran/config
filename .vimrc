@@ -139,3 +139,8 @@ map ¿ ?\c
 
 " File searching
 nnoremap <leader>f :call fzf#run({ 'sink': 'e', 'window': 'enew' })<cr>
+
+" Save & close file commands
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>x :xa<CR>
+nnoremap <leader>w :wa<CR>
