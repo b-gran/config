@@ -9,9 +9,6 @@ alias gcam='git commit -am'
 alias gl='git lg'
 alias gd='git diff'
  
-# Removes the most recent command from history.
-alias rh='sed -i '\''$d'\'' ~/.bash_history'
-
 # Copy the current directory into the system copy buffer
 # Omits any newlines
 alias gpwd="pwd | strip_newlines | system_copy"
@@ -27,3 +24,10 @@ tigl() {
   tags=($(git tag))
   env TIG_DIFF_OPTS="-M -C --find-copies-harder" tig "${branches[@]}" "${tags[@]}" origin/master HEAD
 }
+
+# Improve lsof UX
+alias 2lsof="lsof -P"
+
+# Removes the most recent command from history.
+alias rh='sed -i '\''$d'\'' ~/.bash_history'
+
