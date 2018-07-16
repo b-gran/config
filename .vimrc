@@ -95,6 +95,9 @@ command! -range -nargs=1 Comment :execute "'<,'>normal! <C-v>0I" . <f-args> . "<
 " TODO: support non-MacOS
 command! Copy :execute "!cat % | pbcopy"
 
+" Command for changing CWD to current file
+command CDC cd %:p:h
+
 " Enable frontmatter in markdown files
 let g:vim_markdown_frontmatter = 1
 
