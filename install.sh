@@ -19,6 +19,14 @@ brew_install() {
   fi
 }
 
+brew_install_with_default_names() {
+  if ! is_installed_brew $1; then
+    execute "brew install $1 --with-default-names" "$1 installed"
+  else
+    print_success "$1 already installed"
+  fi
+}
+
 cmd_exists() {
   ! [ -z "$(command -v "$1")" ]
 }
@@ -175,6 +183,9 @@ execute "gem install tmuxinator" "tmuxinator installed"
 brew_install the_silver_searcher
 brew_install fzf
 brew_install tig
+
+# Install gnu-sed and use the sed name (usually it's gsed)
+brew_install_with_default_names gnu-sed
 
 # Needed to support copying from tmux into system pasteboard
 brew_install reattach-to-user-namespace
