@@ -151,3 +151,6 @@ nnoremap <leader>f :call fzf#run({ 'sink': 'e', 'window': 'enew' })<cr>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>x :xa<CR>
 nnoremap <leader>w :wa<CR>
+
+" Create new tabs
+map <leader>T :tabnew<CR>
