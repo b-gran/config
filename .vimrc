@@ -24,6 +24,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'junegunn/fzf'
 Plugin 'simnalamburt/vim-mundo'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'herringtondarkholme/yats.vim'
 
 " (required)
 call vundle#end()
