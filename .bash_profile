@@ -52,7 +52,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Hack to fix nvm on tmux:
 if [ -n $TMUX ]; then
-  nvm use 9
+  nvm use 10
 fi
 
 # Send keys to all tmux panes
