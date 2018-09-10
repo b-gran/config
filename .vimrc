@@ -26,6 +26,7 @@ Plugin 'junegunn/fzf'
 Plugin 'simnalamburt/vim-mundo'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'herringtondarkholme/yats.vim'
+Plugin 'othree/yajs.vim'
 
 " (required)
 call vundle#end()
