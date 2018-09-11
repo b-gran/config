@@ -141,7 +141,7 @@ KEYMAPS(
   (Key_Escape,      Key_1,          Key_2,        Key_3,        Key_4, Key_5, Key_LEDEffectNext,
    Key_Backtick,    Key_Q,          Key_W,        Key_E,        Key_R, Key_T, Key_Tab,
    M(MACRO_CTRL_B), Key_A,          Key_S,        Key_D,        Key_F, Key_G,
-   M(MACRO_CTRL_W), Key_Z,          Key_X,        Key_C,        Key_V, Key_B, Key_Escape,
+   M(MACRO_CTRL_W), Key_Z,          Key_X,        Key_C,        Key_V, Key_B, M(MACRO_CTRL_B),
    Key_LeftControl, Key_Backspace,  Key_LeftGui,  Key_LeftShift,
    ShiftToLayer(FUNCTION),
 
@@ -172,7 +172,7 @@ KEYMAPS(
   (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           XXX,
    Key_Tab,  ___,              Key_mouseUp, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
    Key_Home, Key_mouseL,       Key_mouseDn, Key_mouseR, Key_mouseBtnL, Key_mouseWarpNW,
-   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
+   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  M(MACRO_CTRL_W),
    ___, Key_Delete, ___, ___,
    ___,
 
