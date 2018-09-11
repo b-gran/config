@@ -2,9 +2,19 @@
 
 ## List the most recently active branches in order of most recent -> least recent
 ## Usage:
-##    git recent [count]
+##    git recent [-c] [count]
 ##
 ## If count is supplied, only the $count most recent branches will be displayed.
+## If -c is set, the creator of the branch will be displayed.
+
+BRANCH_FORMAT='"%ai %Cred%ar"'
+while getopts ":c" o; do
+  case $o in
+    c) BRANCH_FORMAT='"%ai %Cred%ar ,%Cresetby %Cgreen%an"';;
+    *) echo 'invalid argument'; exit 1;; 
+  esac
+done
+shift $((OPTIND-1))
 
 function _localBranches {
   git for-each-ref --format='%(refname)' --shell refs/heads | sed 's/refs\/heads\///g' | sed "s/'//g"
@@ -12,12 +22,14 @@ function _localBranches {
 
 function _formatBranch {
   local branch=$1
-  local time=`git show --format="%ai %Cred%ar ,%Cresetby %Cgreen%an" $branch | head -n 1` 
+  local formatString=`sed s/['"']//g <<< $2`
+  local time=`git show --format="$formatString" $branch | head -n 1` 
   printf '\e[34m%s\e[0m,%s\n' "$branch" "$time" 
 }
+export -f _formatBranch
 
 if [ -z $1 ]; then
-  _localBranches | grep -v HEAD | xargs -I{} -n1 bash -c '_formatBranch "$@" {}' | sort -r -t ',' -k2 | column -s ',' -t 
+  _localBranches | grep -v HEAD | xargs -I{} -n1 bash -c '_formatBranch {} '"$BRANCH_FORMAT" | sort -r -t ',' -k2 | column -c 80 -s ',' -t 
 else
-  _localBranches | grep -v HEAD | xargs -I{} -n1 bash -c '_formatBranch "$@" {}' | sort -r -t ',' -k2 | head -n $1 | column -s ',' -t 
+  _localBranches | grep -v HEAD | xargs -I{} -n1 bash -c '_formatBranch {} '"$BRANCH_FORMAT" | sort -r -t ',' -k2 | head -n $1 | column -c 80 -s ',' -t 
 fi
