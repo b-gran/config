@@ -50,9 +50,14 @@ export NVM_DIR="$HOME/.nvm"
 ###           TMUX             ###
 ##################################
 
+# This can be set from elsewhere (e.g. local script)
+if [ -z $NODE_VERSION ]; then
+  NODE_VERSION=10
+fi
+
 # Hack to fix nvm on tmux:
 if [ -n $TMUX ]; then
-  nvm use 10
+  nvm use $NODE_VERSION
 fi
 
 # Send keys to all tmux panes
