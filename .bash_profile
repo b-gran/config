@@ -60,6 +60,9 @@ if [ -n $TMUX ]; then
   nvm use $NODE_VERSION
 fi
 
+# Ctrl-d should only exit after second press
+IGNOREEOF=2
+
 # Send keys to all tmux panes
 unset -f _tmux_send_keys_all_panes_
 _tmux_send_keys_all_panes_ () {
