@@ -114,10 +114,15 @@ echo
 # Figure out if we're skipping backups.
 # The -b argument skips backups.
 DO_BACKUP=true
-while getopts "b" opt; do
+while getopts "bh" opt; do
   case $opt in
     b)
       DO_BACKUP=false
+      ;;
+    h)
+      echo "Usage: install.sh [-b]"
+      echo "       -b: Skip backups"
+      exit 0
       ;;
   esac
 done
@@ -210,6 +215,7 @@ declare -a FILES_TO_SYMLINK=(
   '.gitconfig'
   '.tmux.conf'
   '.tigrc'
+  '.jupyter'
 )
 
 if $DO_BACKUP; then
