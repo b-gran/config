@@ -148,8 +148,13 @@ if ! cmd_exists brew; then
 fi
 
 # Basic utilities (also dependencies for later commands in this install script)
+
 brew_install coreutils
-brew_install python
+
+# Support running this script in venvs etc.
+if ! cmd_exists python; then
+  brew_install python
+fi
 
 # powerline and addons
 if ! cmd_exists powerline; then

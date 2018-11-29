@@ -1,6 +1,11 @@
 # Make sure everyone knows which editor is best
 export EDITOR=/usr/local/bin/vim
 
+# Set up pyenv bin
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 # Fix history
 shopt -s histappend # append to history immediately
 HISTSIZE=9000
@@ -17,10 +22,11 @@ history() {
 export PROMPT_COMMAND=_bash_history_sync
 
 # Start up powerline
+python_site_packages=`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+. $python_site_packages/powerline/bindings/bash/powerline.sh
 
 # Command line colors.
 export CLICOLOR=1
