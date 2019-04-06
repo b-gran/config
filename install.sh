@@ -107,6 +107,13 @@ link() {
   execute "ln -sfn $1 $2"  "linked $1 → $2..."
 }
 
+function on_exit() {
+  println_color purple "\nAborted installation." 
+  exit
+}
+
+trap on_exit INT
+
 println_color blue "You're about to install the b-gran MacOS environment."
 println_color blue "These dotfiles all use python3. This script will install python3 anyway, but if you have already installed python2 you will need to upgrade."
 echo
@@ -148,7 +155,7 @@ if ! cmd_exists brew; then
 fi
 
 # Basic utilities (also dependencies for later commands in this install script)
-
+xcode-select --install
 brew_install coreutils
 
 # Support running this script in venvs etc.
@@ -157,14 +164,9 @@ if ! cmd_exists python; then
 fi
 
 # powerline and addons
-if ! cmd_exists powerline; then
-  # Don't use the --user flag if python is brew installed
-  print_info "installing powerline..."
-  if is_installed_brew python; then
-    execute "pip3 install powerline-status" "powerline installed"
-  else
-    execute "pip3 install --user powerline-status" "powerline installed"
-  fi
+# if ! cmd_exists powerline; then
+if ! pip3 show powerline; then
+  execute "pip3 install powerline-status" "powerline installed"
 else
   print_success "powerline already installed"
 fi
@@ -250,6 +252,9 @@ done
 
 # Install vim plugins
 execute "vim +PluginInstall +qall" "installed vim plugins..."
+
+# Install YouCompleteMe (the vim plugin needs to be installed before this running this)
+execute "$HOME/.vim/bundle/youcompleteme/install.py --clang-completer --ts-completer" "installed YouCompleteMe"
 
 # Reload tmux conf in case there's a tmux session currently running but 
 # we've modified the config.

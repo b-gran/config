@@ -25,8 +25,11 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'junegunn/fzf'
 Plugin 'simnalamburt/vim-mundo'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'herringtondarkholme/yats.vim'
 Plugin 'othree/yajs.vim'
+Plugin 'valloric/youcompleteme'
 
 " (required)
 call vundle#end()
@@ -107,6 +110,11 @@ let g:vim_markdown_frontmatter = 1
 " Show "hidden" (i.e. starting with a dot) files in fzf. Requires ag to be on the path.
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
 
+" Show the changes made to the current file since it was last saved
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+endif
+
 "'''''''''''''''''''''''''''''''''''''''''''''''"
 "''                KEY BINDINGS               ''"
 "'''''''''''''''''''''''''''''''''''''''''''''''"
@@ -154,6 +162,7 @@ nnoremap <leader>f :call fzf#run({ 'sink': 'e', 'window': 'enew' })<cr>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>x :xa<CR>
 nnoremap <leader>w :wa<CR>
+nnoremap <leader>o :only<CR>
 
 " Create new tabs
 map <leader>T :tabnew<CR>
