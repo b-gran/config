@@ -9,6 +9,7 @@ alias gcam='git commit -am'
 alias gl='git lg'
 alias gd='git diff'
 alias gr='git recent 5'
+alias git-root='cd `git rev-parse --show-toplevel`'
  
 # Copy the current directory into the system copy buffer
 # Omits any newlines

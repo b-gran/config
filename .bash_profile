@@ -58,7 +58,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # This can be set from elsewhere (e.g. local script)
 if [ -z $NODE_VERSION ]; then
-  NODE_VERSION=10
+  NODE_VERSION=12
 fi
 
 # Hack to fix nvm on tmux:
@@ -93,3 +93,17 @@ alias ks="_tmux_kill_sessions_"
 
 # Load iterm integration if it's installed
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+function frameworkpython {
+    if [[ ! -z "$VIRTUAL_ENV" ]]; then
+        PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python "$@"
+    else
+        /usr/local/bin/python "$@"
+    fi
+}
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+if [[ -f $HOME/.pingrc ]]; then
+  source $HOME/.pingrc 
+fi
