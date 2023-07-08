@@ -1,3 +1,6 @@
 # MacOS shit
 .DS_Store
 .swp
+
+# Alfred unnecessary stuff -- at least I hope it's unnecessary
+.alfred/Alfred.alfredpreferences/remote/
