@@ -19,6 +19,15 @@ brew_install() {
   fi
 }
 
+# brew install a cask only if it isn't already installed
+brew_install_cask() {
+  if ! is_installed_brew $1; then
+    execute "brew install --cask $1" "$1 installed"
+  else
+    print_success "$1 already installed"
+  fi
+}
+
 brew_install_with_default_names() {
   if ! is_installed_brew $1; then
     execute "brew install $1 --with-default-names" "$1 installed"
@@ -153,20 +162,32 @@ fi
 if ! cmd_exists brew; then
   result_die_failure 1 "please install homebrew and run again" "true"
 fi
+execute "brew update" "ran brew update"
+
+# Casks
+brew_install_cask iterm2
+brew_install_cask rectangle
+brew_install_cask bettertouchtool
+brew_install_cask vallum
+brew_install_cask alfred
 
 # Basic utilities (also dependencies for later commands in this install script)
 xcode-select --install
 brew_install coreutils
+brew install vim
+brew install cmake
 
-# Support running this script in venvs etc.
-if ! cmd_exists python; then
-  brew_install python
-fi
+# Python
+mkdir -p ~/.pyenv
+brew_install pyenv
+execute "pyenv install -s $(cat .pyenv/version)" "Installed python"
+
 
 # powerline and addons
 # if ! cmd_exists powerline; then
 if ! pip3 show powerline; then
-  execute "pip3 install powerline-status" "powerline installed"
+  execute "pip3 install powerline-status" "powerline installed [pyenv]"
+  execute "$(brew --prefix python)/bin/pip3 install powerline-status" "powerline installed [framework for vim]"
 else
   print_success "powerline already installed"
 fi
@@ -180,7 +201,7 @@ execute "pip3 install powerline-gitstatus" "git powerline installed"
 # Instead, we have to actually check the install location.
 NVM_DIR="$HOME/.nvm"
 if [ ! -d "$NVM_DIR" ]; then
-  execute "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash" "nvm installed"
+  execute "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash" "nvm installed"
 else
   print_success "nvm already installed"
 fi
@@ -191,13 +212,9 @@ brew_install ruby
 brew_install fpp
 brew_install tree
 brew_install tmux
-execute "gem install tmuxinator" "tmuxinator installed"
-brew_install the_silver_searcher
 brew_install fzf
 brew_install tig
-
-# Install gnu-sed and use the sed name (usually it's gsed)
-brew_install_with_default_names gnu-sed
+brew_install gnu-sed
 
 # Needed to support copying from tmux into system pasteboard
 brew_install reattach-to-user-namespace
@@ -223,6 +240,7 @@ declare -a FILES_TO_SYMLINK=(
   '.tmux.conf'
   '.tigrc'
   '.jupyter'
+  '.pyenv/version'
 )
 
 if $DO_BACKUP; then
@@ -253,7 +271,7 @@ done
 # Install vim plugins
 execute "vim +PluginInstall +qall" "installed vim plugins..."
 
-# Install YouCompleteMe (the vim plugin needs to be installed before this running this)
+# Install YouCompleteMe (the vim plugin and cmake need to be installed before this running this)
 execute "$HOME/.vim/bundle/youcompleteme/install.py --clang-completer --ts-completer" "installed YouCompleteMe"
 
 # Reload tmux conf in case there's a tmux session currently running but 
@@ -270,10 +288,19 @@ for config_path in .config/iterm/fonts/*; do
   library_path="$HOME/Library/Fonts/$name"
 
   if [ ! -e "$library_path" ]; then
-    execute "cp ${config_path} ${library_path}" "installed font '$name'"
+    cp "${config_path}" "${library_path}"
+    print_success "installed font '$name'"
   else
     print_success "font '$name' already installed"
   fi
 done
 
 print_success "installation completed!"
+
+println_color blue "Here's what you still need to do manually:"
+println_color blue '> Open iTerm preferences and set "Load preferences from a custom folder or URL" to .config/iterm'
+println_color blue '> Set Rectangle preferences (not currently working)'
+println_color blue '> Open BetterTouchTool and grant it permissions'
+println_color blue '> Click the BetterTouchTool service and link the license from your password manager'
+println_color blue '> Open Alfred and paste in your license from your password manager'
+println_color blue "> Set Alfred's preference folder to .alfred"

@@ -1,6 +1,12 @@
 # Make sure everyone knows which editor is best
 export EDITOR=/usr/local/bin/vim
 
+# Silence warning for "default shell is now zsh"
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Put brew on the path
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Set up pyenv bin
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -52,13 +58,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 
+# use gnu-sed as sed
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+
 ##################################
 ###           TMUX             ###
 ##################################
 
 # This can be set from elsewhere (e.g. local script)
 if [ -z $NODE_VERSION ]; then
-  NODE_VERSION=12
+  NODE_VERSION=20
 fi
 
 # Hack to fix nvm on tmux:
