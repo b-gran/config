@@ -37,10 +37,17 @@ POWERLINE_BASH_SELECT=1
 # Command line colors.
 export CLICOLOR=1
 
-# Enable autocomplete for git.
-if [ -f `brew --prefix`/etc/bash_completion ]; then
+# Enable autocomplete
+if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
+  . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+elif [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
 fi
+if [[ -r ~/.git-completion.bash ]]; then
+  . ~/.git-completion.bash
+fi
+
+
 
 # Load the bash utils in config
 for f in ~/.config/bash/*.sh; do source $f; done

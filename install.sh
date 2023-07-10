@@ -196,7 +196,7 @@ fi
 execute "pip3 install powerline-gitstatus" "git powerline installed"
 
 # As of Feb2018, nvm must be installed by curl | bash
-# Since the shell executing this command won't have sourced the .bash_profile, we can't 
+# Since the shell executing this command won't have sourced the .bash_profile, we can't
 # just use `command` or `type` to see if nvm is installed.
 # Instead, we have to actually check the install location.
 NVM_DIR="$HOME/.nvm"
@@ -216,6 +216,9 @@ brew_install fzf
 brew_install tig
 brew_install gnu-sed
 
+GIT_VERSION=`git --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+'`
+execute "curl https://raw.githubusercontent.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash -o ~/.git-completion.bash" "Downloaded git bash completions"
+
 # Needed to support copying from tmux into system pasteboard
 brew_install reattach-to-user-namespace
 
@@ -228,8 +231,8 @@ execute "git submodule update --init --recursive" "updated submodules"
 execute "git submodule foreach git pull origin master" "retrieved latest revisions"
 
 # Symlink submodules
-link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.vim" 
-link "$SCRIPT_DIR/submodules/tpm" "$SCRIPT_DIR/.config/tmux/plugins/tpm" 
+link "$SCRIPT_DIR/submodules/Vundle.vim" "$SCRIPT_DIR/.config/vim/bundle/Vundle.vim"
+link "$SCRIPT_DIR/submodules/tpm" "$SCRIPT_DIR/.config/tmux/plugins/tpm"
 
 declare -a FILES_TO_SYMLINK=(
   '.config'
@@ -274,7 +277,7 @@ execute "vim +PluginInstall +qall" "installed vim plugins..."
 # Install YouCompleteMe (the vim plugin and cmake need to be installed before this running this)
 execute "$HOME/.vim/bundle/youcompleteme/install.py --clang-completer --ts-completer" "installed YouCompleteMe"
 
-# Reload tmux conf in case there's a tmux session currently running but 
+# Reload tmux conf in case there's a tmux session currently running but
 # we've modified the config.
 tmux source-file $HOME/.tmux.conf
 
