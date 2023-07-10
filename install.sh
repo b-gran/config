@@ -180,7 +180,7 @@ brew install cmake
 # Python
 mkdir -p ~/.pyenv
 brew_install pyenv
-execute "pyenv install -s $(cat .pyenv/version)" "Installed python"
+execute "PYTHON_CONFIGURE_OPTS="'"'"--enable-framework"'"'" pyenv install -s $(cat .pyenv/version)" "Installed python"
 
 
 # powerline and addons
