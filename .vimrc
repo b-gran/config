@@ -108,7 +108,7 @@ command! CDC cd %:p:h
 let g:vim_markdown_frontmatter = 1
 
 " Show "hidden" (i.e. starting with a dot) files in fzf. Requires ag to be on the path.
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
+let $FZF_DEFAULT_COMMAND = "rg --files --glob '!.git'"
 
 " Show the changes made to the current file since it was last saved
 if !exists(":DiffOrig")

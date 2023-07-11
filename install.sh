@@ -215,6 +215,7 @@ brew_install tmux
 brew_install fzf
 brew_install tig
 brew_install gnu-sed
+brew_install ripgrep
 
 GIT_VERSION=`git --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+'`
 execute "curl https://raw.githubusercontent.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash -o ~/.git-completion.bash" "Downloaded git bash completions"
