@@ -6,7 +6,7 @@
         "left": [
           {
             "function": "powerline_gitstatus.gitstatus",
-            "priority": 10
+            "priority": 40
           }
         ]
       }
