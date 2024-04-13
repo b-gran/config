@@ -10,7 +10,7 @@ alias gl='git lg'
 alias gd='git diff'
 alias gr='git recent 5'
 alias git-root='cd `git rev-parse --show-toplevel`'
- 
+
 # Copy the current directory into the system copy buffer
 # Omits any newlines
 alias gpwd="pwd | strip_newlines | system_copy"
@@ -33,3 +33,6 @@ alias 2lsof="lsof -P"
 # Removes the most recent command from history.
 alias rh='sed -i '\''$d'\'' ~/.bash_history'
 
+fix_remote_branch () {
+  git branch --set-upstream-to origin/$1
+}
