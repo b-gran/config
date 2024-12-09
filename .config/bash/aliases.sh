@@ -4,6 +4,7 @@ alias la="ls -al"
 
 # GIT
 alias gs='git status'
+alias gst='git status --untracked-files=no'
 alias gc='git commit'
 alias gcam='git commit -am'
 alias gl='git lg'

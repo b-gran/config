@@ -299,6 +299,10 @@ for config_path in .config/iterm/fonts/*; do
   fi
 done
 
+# Setup .bash_history backup
+cp "$HOME/.config/launchd/com.user.bash_history_backup.plist" "$HOME/Library/LaunchAgents/com.user.bash_history_backup.plist"
+execute "launchctl load -w $HOME/Library/LaunchAgents/com.user.bash_history_backup.plist" "installed bash_history backup"
+
 print_success "installation completed!"
 
 println_color blue "Here's what you still need to do manually:"

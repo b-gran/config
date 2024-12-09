@@ -138,3 +138,86 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# a script to install a specific version of a formula from homebrew-core
+# USAGE: brew-switch <formula> <version> [--sha <commit-sha>]
+function brew-switch {
+  local _formula=$1
+  local _version=$2
+  local _sha=""
+
+  # parse optional --sha argument
+  if [[ "$3" == "--sha" ]]; then
+    _sha=$4
+  fi
+
+  # fail for missing arguments
+  if [[ -z "$_formula" || -z "$_version" ]]; then
+    echo "USAGE: brew-switch <formula> <version> [--sha <commit-sha>]"
+    return 1
+  fi
+
+  # ensure 'gh' is installed
+  if [[ -z "$(command -v gh)" ]]; then
+    echo ">>> ERROR: 'gh' must be installed to run this script"
+    return 1
+  fi
+
+  # find the newest commit for the given formula and version if --sha is not provided
+  if [[ -z "$_sha" ]]; then
+    _sha=$(
+      gh search commits \
+        --owner Homebrew \
+        --repo homebrew-core \
+        --limit 1 \
+        --sort committer-date \
+        --order desc \
+        --json sha \
+        --jq '.[0].sha' \
+        "\"${_formula}\" \"${_version}\""
+    )
+  fi
+
+  # fail if no commit was found
+  if [[ -z "$_sha" ]]; then
+    echo "ERROR: No commit found for ${_formula}@${_version}"
+    return 1
+  else
+    echo "INFO: Found commit ${_sha} for ${_formula}@${_version}"
+  fi
+
+  # download the formula file from the commit
+  local _raw_url="https://raw.githubusercontent.com/Homebrew/homebrew-core/${_sha}/Formula/${_formula:0:1}/${_formula}.rb"
+  local _formula_path="/tmp/${_formula}.rb"
+  echo "INFO: Downloading ${_raw_url}"
+  if ! curl -fL "$_raw_url" -o "$_formula_path"; then
+    echo ""
+    echo "WARNING: Download failed, trying old formula path"
+
+    # try the old formula path
+    _raw_url="https://raw.githubusercontent.com/Homebrew/homebrew-core/${_sha}/Formula/${_formula}.rb"
+    echo "INFO: Downloading ${_raw_url}"
+    curl -fL "$_raw_url" -o "$_formula_path" || (echo "ERROR: Failed to download ${_raw_url}" && return 1)
+  fi
+
+  # if the formula is already installed, uninstall it
+  if brew ls --versions "$_formula" >/dev/null; then
+    echo ""
+    echo "WARNING: '$_formula' already installed, do you want to uninstall it? [y/N]"
+    local _reply=$(bash -c "read -n 1 -r && echo \$REPLY")
+    echo ""
+    if [[ $_reply =~ ^[Yy]$ ]]; then
+      echo "INFO: Uninstalling '$_formula'"
+      brew unpin "$_formula"
+      brew uninstall "$_formula" || (echo "ERROR: Failed to uninstall '$_formula'" && return 1)
+    else
+      echo "ERROR: '$_formula' is already installed, aborting"
+      return 1
+    fi
+  fi
+
+  # install the downloaded formula
+  echo "INFO: Installing ${_formula}@${_version} from local file: $_formula_path"
+  brew install --formula "$_formula_path"
+  brew pin "$_formula"
+}
