@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.user.bash_history_backup</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/env</string>
+      <string>python3</string>
+      <string>/Users/bill/.config/launchd/bash_history_backup.py</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Runs every 4 hours: 4 * 3600 = 14400 seconds -->
+    <key>StartInterval</key>
+    <integer>14400</integer>
+
+    <!-- Keep it running even if nobody is logged in -->
+    <key>LaunchOnlyOnce</key>
+    <false/>
+  </dict>
+</plist>
