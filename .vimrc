@@ -1,5 +1,20 @@
-" Note to self: if this is a fresh install, run :PluginInstall to install 
+" Note to self: if this is a fresh install, run :PluginInstall to install
 " Vundle deps.
+
+" the python path is set when vim is built. I'm currently using 3.13 so this is hardcoded.
+let pyenv_site_packages = trim(system('pyenv prefix 3.13')) . '/lib/python3.13/site-packages'
+python3 import sys, os, vim
+python3 p = vim.eval('pyenv_site_packages')
+python3 if os.path.isdir(p) and p not in sys.path: sys.path.insert(0, p)
+
+if has('termguicolors')
+    set termguicolors
+endif
+
+" Fallback for terminals that only do 256 colours
+if !exists('$COLORTERM') || index(['truecolor', '24bit'], $COLORTERM) < 0
+    set t_Co=256
+endif
 
 " Add custom vim config directory to the runtime path
 set rtp+=$HOME/.config/vim/
@@ -16,7 +31,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'       " (required) enables Vundle
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'lifepillar/vim-solarized8'
 Plugin 'Helcaraxan/schemalang-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
@@ -38,7 +53,7 @@ filetype plugin indent on
 " Enable mouse
 set mouse=a
 
-" Setup powerline status 
+" Setup powerline status
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
@@ -63,7 +78,7 @@ set number
 " Command in bottom bar
 set showcmd
 
-" Highlighting 
+" Highlighting
 set showmatch " Matching syntax pairs
 set hlsearch " Matching search terms
 
@@ -77,9 +92,13 @@ set ruler
 " Enable spell checking for some file types
 autocmd FileType latex,tex,md,markdown,text,txt setlocal spell
 
-" Enable Solarized
-set background=light
-colorscheme solarized
+" Enable Solarized (variant based on the host terminal)
+if exists('$TERM_PROGRAM') && $TERM_PROGRAM ==# 'vscode'
+  set background=dark
+else
+  set background=light
+endif
+autocmd vimenter * ++nested colorscheme solarized8
 
 " Disable folding in markdown files
 let g:vim_markdown_folding_disabled = 1
@@ -142,8 +161,8 @@ nmap ∆ ]e
 xmap ∆ ]e
 
 " Comment out lines with <space>/
-vmap <leader>/ :Comment 
-nnoremap <leader>/ V:Comment 
+vmap <leader>/ :Comment
+nnoremap <leader>/ V:Comment
 
 " Toggles the undo history panel
 map <C-g> :MundoToggle<CR>
